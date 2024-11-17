@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>birthday</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            width: 100%;
+            background-color: #457b9d;
+            overflow-x: hidden;
+        }
+        
+        .top {
+            width: 100%;
+            height: auto;
+            padding: 10px;
+        }
+        
+        .top>div {
+            text-transform: capitalize;
+            color: #f1faee;
+            text-shadow: 0 0 10px #fff;
+        }
+        
+        .left {
+            position: relative;
+            left: 0;
+            width: 200px;
+            height: 50px;
+            transition: all 7s ease-in-out;
+        }
+        
+        .right {
+            position: relative;
+            right: 0;
+            margin-left: auto;
+            width: 250px;
+            height: 50px;
+            transition: all 7s ease-in-out;
+        }
+        
+        .niha {
+            position: relative;
+            left: 30%;
+            top: 0%;
+            transform: translate(-10%, -50%);
+        }
+        
+        .bottom {
+            width: 100%;
+            height: auto;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #edf6f9;
+        }
+        
+        .bottom>img {
+            width: 100px;
+        }
+        
+        .bottom>p {
+            text-transform: uppercase;
+            font-size: 2rem;
+            color: #000;
+            text-shadow: 0 0 10px #fff;
+            white-space: nowrap;
+        }
+        
+        .falling-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+        
+        .falling-element {
+            position: absolute;
+            color: red;
+            font-size: 2rem;
+            animation: fall 5s linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .innerbox {
+            width: 100px;
+            height: 100px;
+            background-color: palevioletred;
+        }
+        
+        .innerbox::before {
+            width: 20px;
+            height: 100px;
+            background-color: #fff;
+            margin-left: -10px;
+        }
+        
+        .box {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 100px 0 0 0;
+            transition: all 5s ease-in-out;
+        }
+        
+        .innerbox {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background-color: palevioletred;
+            animation: shake 0.5s infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-10px);
+            }
+            40% {
+                transform: translatey(-10px);
+            }
+            60% {
+                transform: translateX(10px);
+            }
+            70% {
+                transform: translateY(10px);
+            }
+        }
+        
+        .innerbox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-46%);
+            background-color: palevioletred;
+            width: 225px;
+            height: 20px;
+            border-radius: 3px 3px;
+            box-shadow: 0 0 3px;
+        }
+        
+        .line {
+            position: relative;
+            top: 50%;
+            width: 200px;
+            height: 10px;
+            background-color: #ffff;
+        }
+        
+        .line1 {
+            position: relative;
+            width: 10px;
+            height: 180px;
+            background-color: #ffff;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%);
+        }
+        
+        .box>img {
+            width: 150px;
+            height: 200px;
+            z-index: 3;
+            transition: opacity 0.5s ease;
+            margin-left: -170px;
+        }
+        
+        .innerbox.breaking {
+            animation: break 0.5s forwards;
+        }
+        
+        @keyframes break {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+        
+        .click-text {
+            position: absolute;
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: bold;
+            pointer-events: none;
+            user-select: none;
+            text-shadow: 0 0 5px #000;
+            position: relative;
+            top: -50%;
+            left: 30%;
+        }
+        
+        .transition {
+            animation: unbreak 0.5s forwards;
+        }
+        
+        @keyframes unbreak {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transition: all 5s ease-in-out;
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .proposal-text {
+            display: none;
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            color: #f1faee;
+            font-size: 2rem;
+            text-align: center;
+            text-shadow: 0 0 10px #000;
+            text-align: justify;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="left">
+            <h1>WishYou</h1>
+        </div>
+        <div class="right">
+            <h1>Happy birthday</h1>
+        </div>
+        <div class="niha">
+            <h1>My dear niharika</h1>
+        </div>
+    </div>
+    <div class="bottom">
+        <img src="ballon.png" alt="">
+        <p>i love you</p>
+        <img src="ballon.png" alt="">
+    </div>
+    <div class="falling-container"></div>
+    <div class="box">
+        <div class="innerbox">
+            <div class="line"></div>
+            <div class="line1"></div>
+            <div class="click-text">Click Me</div>
+        </div>
+        <img src="niha2.jpeg" id="hiddenImage">
+    </div>
+    <div class="proposal-text" id="proposalText">
+        My dearest Niharika, you are my everything. Will you be with me forever? Happy Birthday, my love. always be happy .your dreams comes true.
+    </div>
+    <script>
+        $(document).ready(function() {
+            $(".niha").hide();
+            $(".bottom").hide();
+            $(".left").css("left", "100%");
+            $(".right").css("right", "100%");
+            $(".box").hide();
+            $("#hiddenImage").hide();
+            $(".left, .right").promise().done(function() {
+                $(".niha").fadeIn(10000).css("top", "-50px");
+                $(".niha").promise().done(function() {
+                    $(".bottom").fadeIn(3000);
+                    createFallingElements();
+                    $(".bottom").promise().done(function() {
+                        $(".box").show();
+                    });
+                });
+            });
+
+            function createFallingElements() {
+                const container = $(".falling-container");
+
+                for (let i = 0; i < 50; i++) {
+                    const isHeart = Math.random() > 0.5;
+                    const element = $("<div class='falling-element'></div>").text(isHeart ? "❤️" : "N");
+
+
+                    const startLeft = Math.random() * 100;
+                    const size = Math.random() * 1.5 + 1;
+
+                    element.css({
+                        left: `${startLeft}vw`,
+                        fontSize: `${size}rem`,
+                        animationDuration: `${Math.random() * 2 + 3}s`,
+                        animationDelay: `${Math.random() * 5}s`
+                    });
+
+                    container.append(element);
+                }
+            }
+            $(".innerbox").on("click", function() {
+                $(this).addClass("breaking");
+                $(".click-text").fadeOut(300);
+
+                $("#hiddenImage").show();
+                $("#hiddenImage").addClass("transition");
+                $("#hiddenImage").promise().done(function() {
+                    $("#proposalText").fadeIn(2000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
